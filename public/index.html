@@ -65,12 +65,7 @@
 
 
   <div class="container"><button type="button" class="btn btn-primary" onclick="init()">Start</button></div>
-
   <div class="container my-4" id="webcam-container"></div>
-  <div class="container">
-    <h2>Well, you look like .... </h2>
-  </div>
-
   <div class="container" id="label-container"></div>
 
   <script type="text/javascript">
@@ -129,7 +124,7 @@
 
         // const classPrediction =
         //   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[0].innerHTML = label + " " + maxProb + "%" ;//classPrediction;
+        labelContainer.childNodes[0].innerHTML = "<h3>Well, you look like ... "+ label + " " + maxProb + "%</h3>" ;//classPrediction;
       // }
     }
   </script>
