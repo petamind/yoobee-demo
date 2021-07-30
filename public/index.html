@@ -58,7 +58,7 @@
 
   <div class="container" id="face">
     <h1 class="display-4">Chat with Tung</h1>
-    <p class="lead">Let's play with an AI application. It can see common objects, e.g. hand, document, watch, phone, and some celeb comparison.</p>
+    <p class="lead">About this AI application which can see common objects, e.g. hand, document, watch, phone, and some celeb comparison.</p>
   </div>
 
   <div class="container"><button id="start" type="button" class="btn btn-primary" onclick="init()">Start</button></div>
@@ -83,7 +83,7 @@
     // Load the image model and setup the webcam
     async function init() {
       if (camOn){
-        location.reload();
+        location.reload(true);
         return;
       }
 
