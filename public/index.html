@@ -32,7 +32,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top" id="home">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
       aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -42,13 +42,11 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Faces <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#home">Faces and Objects<span class="sr-only">(current)</span></a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="#">Objects</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">About</a>
+          <a class="nav-link " href="#about">About</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -59,14 +57,20 @@
   </nav>
 
   <div class="container" id="face">
-
-    <p>Press start to begin</p>
+    <h1 class="display-4">Welcome</h1>
+    <p class="lead">Let's play with AI application. This model can tell common objects, e.g. hand, document, watch, phone, and some celebs</p>
   </div>
 
 
-  <div class="container"><button type="button" class="btn btn-primary" onclick="init()">Start</button></div>
+  <div class="container"><button id="start" type="button" class="btn btn-primary" onclick="init()">Start</button></div>
   <div class="container my-4" id="webcam-container"></div>
   <div class="container" id="label-container"></div>
+  <div class="container" id="about">
+    <h4>About</h4>
+    <p class="lead">This application was developed using an AI model, Continuous Integration with Github and Google Firebase hosting.</p>
+    <p class="lead">Developed and demonstrated by <a href="https://petamind.com">Dr. Tung Nguyen</a>, Lecturer of Bachelor of Software Engineering, Cloud Engineering at <a href="http://yoobee.ac.nz"> Yoobee Colleges!</a></p>
+    
+  </div>
 
   <script type="text/javascript">
     // More API functions here:
@@ -76,9 +80,14 @@
     const URL = "./my_model/";
 
     let model, webcam, labelContainer, maxPredictions;
-
+    var camOn = false;
     // Load the image model and setup the webcam
     async function init() {
+      if (camOn){
+        location.reload();
+        return;
+      }
+      
       const modelURL = URL + "model.json";
       const metadataURL = URL + "metadata.json";
 
@@ -103,6 +112,12 @@
       // for (let i = 0; i < maxPredictions; i++) { // and class labels
       //   labelContainer.appendChild(document.createElement("div"));
       // }
+      
+        const btn = document.getElementById("start");
+        btn.innerText = "Stop";
+        btn.classList.add(".text-danger");
+        camOn = !camOn;
+
     }
 
     async function loop() {
@@ -117,14 +132,14 @@
       const prediction = await model.predict(webcam.canvas);
       const probs = prediction.map(pr => pr.probability*100);
       //console.log(probs);
-      const maxProb = Math.max(...probs).toFixed(1);
+      const maxProb = (Math.max(...probs)).toFixed(1);
       const label = prediction[argMax(probs)].className;
       //console.log(maxProb);
       // for (let i = 0; i < maxPredictions; i++) {
 
         // const classPrediction =
         //   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[0].innerHTML = "<h3>Well, you look like ... "+ label + " " + maxProb + "%</h3>" ;//classPrediction;
+        labelContainer.childNodes[0].innerHTML = "<h5 class=\"lead\">Well, you look like ... "+ label + " " + maxProb + "%</h5>" ;//classPrediction;
       // }
     }
   </script>
