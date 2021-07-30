@@ -13,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-
+  <script src="./js/myjs.js"></script>
   <style>
     .parallax {
       /* The image used */
@@ -59,14 +59,18 @@
   </nav>
 
   <div class="container" id="face">
-    <h2>Well, you look like .... </h2>
+
     <p>Press start to begin</p>
   </div>
 
 
-  <div class="container"><button type="button" class="btn btn-primary"onclick="init()">Start</button></div>
-  
+  <div class="container"><button type="button" class="btn btn-primary" onclick="init()">Start</button></div>
+
   <div class="container my-4" id="webcam-container"></div>
+  <div class="container">
+    <h2>Well, you look like .... </h2>
+  </div>
+
   <div class="container" id="label-container"></div>
 
   <script type="text/javascript">
@@ -100,9 +104,10 @@
       // append elements to the DOM
       document.getElementById("webcam-container").appendChild(webcam.canvas);
       labelContainer = document.getElementById("label-container");
-      for (let i = 0; i < maxPredictions; i++) { // and class labels
-        labelContainer.appendChild(document.createElement("div"));
-      }
+      labelContainer.appendChild(document.createElement("div"));
+      // for (let i = 0; i < maxPredictions; i++) { // and class labels
+      //   labelContainer.appendChild(document.createElement("div"));
+      // }
     }
 
     async function loop() {
@@ -112,14 +117,20 @@
     }
 
     // run the webcam image through the image model
-    async function predict() {
+    async function predict() { 
       // predict can take in an image, video or canvas html element
       const prediction = await model.predict(webcam.canvas);
-      for (let i = 0; i < maxPredictions; i++) {
-        const classPrediction =
-          prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[i].innerHTML = classPrediction;
-      }
+      const probs = prediction.map(pr => pr.probability*100);
+      //console.log(probs);
+      const maxProb = Math.max(...probs).toFixed(1);
+      const label = prediction[argMax(probs)].className;
+      //console.log(maxProb);
+      // for (let i = 0; i < maxPredictions; i++) {
+
+        // const classPrediction =
+        //   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        labelContainer.childNodes[0].innerHTML = label + " " + maxProb + "%" ;//classPrediction;
+      // }
     }
   </script>
 </body>
