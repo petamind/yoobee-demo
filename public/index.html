@@ -58,7 +58,7 @@
 
   <div class="container" id="face">
     <h1 class="display-4">Welcome</h1>
-    <p class="lead">Let's play with AI application. This model can tell common objects, e.g. hand, document, watch, phone, and some celebs</p>
+    <p class="lead">Let's play with AI application. This model can tell common objects, e.g. hand, document, watch, phone, and some celeb comparison.</p>
   </div>
 
 
@@ -115,7 +115,7 @@
       
         const btn = document.getElementById("start");
         btn.innerText = "Stop";
-        btn.classList.add(".text-danger");
+        btn.classList.add("bg-danger");
         camOn = !camOn;
 
     }
@@ -139,7 +139,7 @@
 
         // const classPrediction =
         //   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[0].innerHTML = "<h5 class=\"lead\">Well, you look like ... "+ label + " " + maxProb + "%</h5>" ;//classPrediction;
+        labelContainer.childNodes[0].innerHTML = "<h5 class=\"lead text-success\">Well, you look like ... "+ label + " " + maxProb + "%</h5>" ;//classPrediction;
       // }
     }
   </script>
