@@ -86,6 +86,9 @@
         location.reload();
         return;
       }
+
+      const btn = document.getElementById("start");
+      btn.innerText = "Loading..."
       
       const modelURL = URL + "model.json";
       const metadataURL = URL + "metadata.json";
@@ -112,10 +115,9 @@
       //   labelContainer.appendChild(document.createElement("div"));
       // }
       
-        const btn = document.getElementById("start");
-        btn.innerText = "Stop";
-        btn.classList.add("bg-danger");
-        camOn = !camOn;
+      btn.innerText = "Stop";
+      btn.classList.add("bg-danger");
+      camOn = !camOn;
 
     }
 
