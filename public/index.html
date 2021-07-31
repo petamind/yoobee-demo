@@ -58,17 +58,30 @@
 
   <div class="container" id="face">
     <h1 class="display-4">Chat with Tung</h1>
-    <p class="lead">About this AI application which can see common objects, e.g. hand, document, watch, phone, and some celeb comparison.</p>
+    <p class="lead">About this AI application which can see common objects, e.g. hand, document, watch, phone, and some
+      celeb comparison.</p>
   </div>
 
-  <div class="container"><button id="start" type="button" class="btn btn-primary" onclick="init()">Start</button></div>
-  <div class="container my-4" id="webcam-container"></div>
-  <div class="container" id="label-container"></div>
-  <div class="container" id="about">
+
+  <div class="container my-4">
+    <div class="row">
+      <div class="col-sm d-flex justify-content-center" id="webcam-container">
+      </div>
+      <div class="col-sm d-flex justify-content-center">
+        <img class="img-responsive" id="target">
+      </div>
+    </div>
+  </div>
+
+  <div class="container d-flex justify-content-center" id="label-container"></div>
+  <div class="container"><button id="start" type="button" class="btn btn-primary" onclick="init()">Start</button>
+  </div>
+  <div class="container my-4" id="about">
     <h4>About</h4>
-    <p class="lead">This app was developed using a deep learning model, deployed with CI/CD Github and Google Firebase hosting.</p>
-    <p class="lead">Developed and demonstrated by <a href="https://petamind.com">Dr. Tung Nguyen</a>, Lecturer of Bachelor of Software Engineering, Cloud Engineering at <a href="http://yoobee.ac.nz"> Yoobee Colleges!</a></p>
-    
+    <p class="lead">This app was developed using a deep learning model, deployed with CI/CD Github and Google Firebase
+      hosting.</p>
+    <p class="lead">Developed and demonstrated by <a href="https://petamind.com">Tung Nguyen</a>, Ph.D, Lecturer of
+      Bachelor of Software Engineering, Cloud Engineering at <a href="http://yoobee.ac.nz"> Yoobee Colleges!</a></p>
   </div>
 
   <script type="text/javascript">
@@ -82,14 +95,14 @@
     var camOn = false;
     // Load the image model and setup the webcam
     async function init() {
-      if (camOn){
+      if (camOn) {
         location.reload(true);
         return;
       }
 
       const btn = document.getElementById("start");
       btn.innerText = "Loading..."
-      
+
       const modelURL = URL + "model.json";
       const metadataURL = URL + "metadata.json";
 
@@ -114,7 +127,7 @@
       // for (let i = 0; i < maxPredictions; i++) { // and class labels
       //   labelContainer.appendChild(document.createElement("div"));
       // }
-      
+
       btn.innerText = "Stop";
       btn.classList.add("bg-danger");
       camOn = !camOn;
@@ -128,19 +141,23 @@
     }
 
     // run the webcam image through the image model
-    async function predict() { 
+    async function predict() {
       // predict can take in an image, video or canvas html element
       const prediction = await model.predict(webcam.canvas);
-      const probs = prediction.map(pr => pr.probability*100);
+      const probs = prediction.map(pr => pr.probability * 100);
       //console.log(probs);
       const maxProb = (Math.max(...probs)).toFixed(1);
       const label = prediction[argMax(probs)].className;
       //console.log(maxProb);
       // for (let i = 0; i < maxPredictions; i++) {
 
-        // const classPrediction =
-        //   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[0].innerHTML = "<h5 class=\"lead text-success\">Well, you look like ... "+ label + " " + maxProb + "%</h5>" ;//classPrediction;
+      // const classPrediction =
+      //   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      const img = document.getElementById("target");
+      img.src = "./img/"+ label + "/1.jpg";
+      img.height = "200";
+
+      labelContainer.childNodes[0].innerHTML = "<h5 class=\"lead text-success\">Well, you look like ... " + label + " " + maxProb + "%</h5>";//classPrediction;
       // }
     }
   </script>
