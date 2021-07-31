@@ -71,8 +71,6 @@
 
   <script type="text/javascript">
     // More API functions here:
-    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-
     // the link to your model provided by Teachable Machine export panel
     const URL = "./my_model/";
 
@@ -109,9 +107,6 @@
       document.getElementById("webcam-container").appendChild(webcam.canvas);
       labelContainer = document.getElementById("label-container");
       labelContainer.appendChild(document.createElement("div"));
-      // for (let i = 0; i < maxPredictions; i++) { // and class labels
-      //   labelContainer.appendChild(document.createElement("div"));
-      // }
 
       btn.innerText = "Stop";
       btn.classList.add("bg-danger");
@@ -133,11 +128,7 @@
       //console.log(probs);
       const maxProb = (Math.max(...probs)).toFixed(1);
       const label = prediction[argMax(probs)].className;
-      //console.log(maxProb);
-      // for (let i = 0; i < maxPredictions; i++) {
 
-      // const classPrediction =
-      //   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
       const img = document.getElementById("target");
       img.src = "./img/"+ label + "/1.jpg";
       img.height = "200";
