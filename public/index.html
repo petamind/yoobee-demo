@@ -22,7 +22,7 @@
       aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Yoobee Demo</a>
+    <a class="navbar-brand font-weight-bold text-warning" href="#">Yoobee Demo</a>
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -36,19 +36,41 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" data-toggle="modal" data-target="#exampleModal">Search</button>
       </form>
     </div>
   </nav>
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">YTech can shape our future</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          I know you are curious but Nothing to search for! 😃
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container" id="face">
     <h1 class="display-4">Chat with Tung</h1>
-    <p class="lead">About this AI application which can see common objects, e.g. hand, document, watch, phone, and some
+    <p class="lead">About this AI application which can see common objects, e.g. cups, hands, document, watches, phones,
+      and some
       celeb comparison.</p>
   </div>
 
 
-  <div class="container my-4">
+  <div class="container my-4 ">
     <div class="row">
       <div class="col-sm d-flex justify-content-center" id="webcam-container">
       </div>
@@ -61,11 +83,11 @@
   <div class="container d-flex justify-content-center" id="label-container"></div>
   <div class="container"><button id="start" type="button" class="btn btn-primary" onclick="init()">Start</button>
   </div>
-  <div class="container my-4" id="about">
+  <div class="container my-4 bg-light" id="about">
     <h4>About</h4>
     <p class="lead">This app was developed using a deep learning model, deployed with CI/CD Github and Google Firebase
       hosting.</p>
-    <p class="lead">Developed and demonstrated by <a href="https://petamind.com">Tung Nguyen</a>, Ph.D, Lecturer of
+    <p class="lead">Demonstrated by <a href="https://petamind.com">Tung Nguyen</a>, Ph.D, Lecturer of
       Bachelor of Software Engineering, Cloud Engineering at <a href="http://yoobee.ac.nz"> Yoobee Colleges!</a></p>
   </div>
 
@@ -130,12 +152,12 @@
       const label = prediction[argMax(probs)].className;
 
       const img = document.getElementById("target");
-      if(label.includes("Kenu")){
+      if (label.includes("Kenu")) {
         img.src = `./img/Kenu Reeves/1.jpg`;
       } else {
         img.src = `./img/${label}/1.jpg`;
       }
-      
+
       img.height = "200";
 
       labelContainer.childNodes[0].innerHTML = `<h5 class=\"lead text-success\">Well, you look like ... ${label} ${maxProb} %</h5>`;//classPrediction;
