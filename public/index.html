@@ -130,10 +130,15 @@
       const label = prediction[argMax(probs)].className;
 
       const img = document.getElementById("target");
-      img.src = "./img/"+ label + "/1.jpg";
+      if(label.includes("Kenu")){
+        img.src = `./img/Kenu Reeves/1.jpg`;
+      } else {
+        img.src = `./img/${label}/1.jpg`;
+      }
+      
       img.height = "200";
 
-      labelContainer.childNodes[0].innerHTML = "<h5 class=\"lead text-success\">Well, you look like ... " + label + " " + maxProb + "%</h5>";//classPrediction;
+      labelContainer.childNodes[0].innerHTML = `<h5 class=\"lead text-success\">Well, you look like ... ${label} ${maxProb} %</h5>`;//classPrediction;
       // }
     }
   </script>
