@@ -122,18 +122,45 @@
       const flip = true; // whether to flip the webcam
       webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
       await webcam.setup(); // request access to the webcam
-      await webcam.play();
-      window.requestAnimationFrame(loop);
 
-      // append elements to the DOM
-      document.getElementById("webcam-container").appendChild(webcam.canvas);
+      // grab video-object in any way you want and set the attributes --> **"muted" and "playsinline"**
+      if(iOS()){
+        document.getElementById("webcam-container").appendChild(webcam.webcam);
+        let wc = document.getElementsByTagName('video')[0];
+        wc.setAttribute("playsinline", true); // written with "setAttribute" bc. iOS buggs otherwise :-)
+        wc.muted = "true"
+        wc.id = "webcamVideo";
+        wc.setAttribute('height', '200');
+        wc.setAttribute('width', '200');
+        wc.classList.add("rounded");
+      } else  {
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        document.getElementsByTagName("canvas")[0].classList.add("rounded-circle");
+        //webcam.canvas.classList.add("rounded-circle");
+      }
       labelContainer = document.getElementById("label-container");
       labelContainer.appendChild(document.createElement("div"));
+
+      await webcam.play();
+      window.requestAnimationFrame(loop);//fix for iOS
 
       btn.innerText = "Stop";
       btn.classList.add("bg-danger");
       camOn = !camOn;
 
+    }
+
+    function iOS() {
+      return [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod'
+      ].includes(navigator.platform)
+        // iPad on iOS 13 detection
+        || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
     }
 
     async function loop() {
@@ -148,7 +175,8 @@
       const prediction = await model.predict(webcam.canvas);
       const probs = prediction.map(pr => pr.probability * 100);
       //console.log(probs);
-      const maxProb = (Math.max(...probs)).toFixed(1);
+      const maxProb = (Math.max(...probs)).toFixed(0);
+      const maxProb2 = parseInt(maxProb) + (10 - parseInt(maxProb)%10)
       const label = prediction[argMax(probs)].className;
 
       const img = document.getElementById("target");
@@ -160,7 +188,7 @@
 
       img.height = "200";
 
-      labelContainer.childNodes[0].innerHTML = `<h5 class=\"lead text-success\">Well, you look like ... ${label} ${maxProb} %</h5>`;//classPrediction;
+      labelContainer.childNodes[0].innerHTML = `<h4 class=\"display-5 text-info\">"Well, you look like ... ${label} ${maxProb2}%"</h5>`;//classPrediction;
       // }
     }
   </script>
